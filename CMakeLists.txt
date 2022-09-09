@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
-# include("${CMAKE_CURRENT_SOURCE_DIR}/../cmake/get-version.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/get-version.cmake")
 
-# project(bcm2835 VERSION ${VERSION})
-project(bcm2835 VERSION 0.1)
+project(bcm2835 VERSION ${VERSION})
+
+# Targets
 set(TARGET bcm2835)
 set(TEST_TARGET test_bcm2835)
 
@@ -33,6 +34,22 @@ target_link_libraries(${TARGET} rt)
 # Add install
 install(TARGETS ${TARGET} DESTINATION lib)
 install(FILES ${bcm2835_h} DESTINATION include)
+
+# CPack
+set(CPACK_PACKAGE_NAME "bcm2835")
+set(CPACK_PACKAGE_DESCRIPTION "C library for Broadcom BCM 2835 as used in Raspberry Pi ")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/Lucino772/bcm2835")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README")
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "bcm2835")
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "armhf")
+
+set(CPACK_SOURCE_GENERATOR "TGZ;ZIP")
+
+include(CPack)
 
 ## Test
 # Source Files
