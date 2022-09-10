@@ -10,7 +10,7 @@ BCM2835_DIR="bcm2835-$BCM2835_VERSION"
 # Check that the DOWNLOAD_URL was wound
 if [ -z "$DOWNLOAD_URL" ]; then
     echo "Could not scrape the download url from $HOME_URL"
-    exit 2
+    exit 1
 else
     echo "Found download url, version $BCM2835_VERSION"
 fi
@@ -24,14 +24,15 @@ wget "$DOWNLOAD_URL" -O "$DOWNLOAD_FILE"
 tar -xf "$DOWNLOAD_FILE" -C "$temp_dir"
 
 # rsync files to current direcctory
-EXIT_CODE=1
+EXIT_CODE=0
+UPDATED=0
 RSYNC_OUT=$(rsync -rci "$temp_dir/$BCM2835_DIR"/* .)
 
 if [ $? -ne 0 ]; then
     echo "rsync: error"
-    EXIT_CODE=2
+    EXIT_CODE=1
 elif [ -n "$RSYNC_OUT" ]; then
-    EXIT_CODE=0
+    UPDATED=1
 fi
 
 # Remove temp directory
@@ -39,7 +40,7 @@ rm -rf "$temp_dir"
 
 # GitHub integration
 if [[ ! -z "$CI" ]]; then
-    echo "::set-output name=updated::$EXIT_CODE"
+    echo "::set-output name=updated::$UPDATED"
     echo "::set-output name=version::$BCM2835_VERSION"
 fi
 
