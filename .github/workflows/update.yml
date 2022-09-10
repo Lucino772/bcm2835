@@ -20,6 +20,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "<>"
           git checkout -b update-${{ steps.run_update.outputs.version }}
+          git add -a
           git commit -m "[ci] auto-update to ${{ steps.run_update.outputs.version }}"
           git push origin update-${{ steps.run_update.outputs.version }}
       - name: Create Pull Request
