@@ -36,4 +36,11 @@ fi
 
 # Remove temp directory
 rm -rf "$temp_dir"
+
+# GitHub integration
+if [[ ! -z "$CI" ]]; then
+    echo "::set-output name=updated::$EXIT_CODE"
+    echo "::set-output name=version::$BCM2835_VERSION"
+fi
+
 exit $EXIT_CODE
