@@ -21,7 +21,7 @@ jobs:
           git config user.email "<>"
           git checkout -b update-${{ steps.run_update.outputs.version }}
           git add --all
-          git commit -m "[ci] auto-update to ${{ steps.run_update.outputs.version }}"
+          git commit -m "[ci] autoupdate to ${{ steps.run_update.outputs.version }}"
           git push origin update-${{ steps.run_update.outputs.version }}
       - name: Create Pull Request
         uses: actions/github-script@v6
@@ -30,7 +30,7 @@ jobs:
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
-              title: 'Source code update',
+              title: '[ci] autoupdate to ${{ steps.run_update.outputs.version }}',
               owner,
               repo,
               head: 'update-${{ steps.run_update.outputs.version }}',
