@@ -40,8 +40,8 @@ rm -rf "$temp_dir"
 
 # GitHub integration
 if [[ ! -z "$CI" ]]; then
-    echo "::set-output name=updated::$UPDATED"
-    echo "::set-output name=version::$BCM2835_VERSION"
+    echo "updated=$UPDATED" >> $GITHUB_OUTPUT
+    echo "version=$BCM2835_VERSION" >> $GITHUB_OUTPUT
 fi
 
 exit $EXIT_CODE
