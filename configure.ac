@@ -6,9 +6,9 @@ dnl (C) 2012 Mike McCauley (mikem@airspayce.com)
 
 dnl Dont forget to update  BCM2835_VERSION and .tar.gz in bcm2835.h
 dnl and the zip file.
-AC_INIT([bcm2835], [1.73], [mikem@airspayce.com])
+AC_INIT([bcm2835], [1.75], [mikem@airspayce.com])
 
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h:config.h.in)
 AM_INIT_AUTOMAKE()
 AC_CHECK_LIB([rt], [clock_gettime])
 AC_MSG_CHECKING([for docs])
@@ -29,4 +29,5 @@ AC_PROG_CC
 AC_CONFIG_MACRO_DIR([m4])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
-AC_OUTPUT(Makefile src/Makefile doc/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile doc/Makefile)
+AC_OUTPUT
